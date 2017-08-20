@@ -1,0 +1,12 @@
+import bowling.BowlingController
+import grails.core.GrailsApplication
+import grails.plugins.GrailsPluginManager
+
+model {
+    String val1
+    String val2
+}
+
+json {
+    message val1
+}

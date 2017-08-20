@@ -22,12 +22,20 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetch(SERVER_URL + '/application')
+    fetch(SERVER_URL + '/')
       .then(r => r.json())
       .then(json => this.setState({serverInfo: json}))
       .catch(error => console.error('Error connecting to server: ' + error));
 
   }
+
+  static submit() {
+    console.log("123");
+      fetch(SERVER_URL + 'bowling/roll')
+          .then(v => console.log(v))
+
+  }
+
 
   render() {
     const serverInfo = this.state.serverInfo;
@@ -35,35 +43,39 @@ class App extends Component {
 
     return (
       <div>
-        <AppNav serverInfo={serverInfo} clientInfo={clientInfo}/>
-        <div className="grails-logo-container">
-          <img className="grails-logo" src={grailsLogo} alt="Grails" />
-          <span className="plus-logo">+</span>
-          <img className="hero-logo" src={reactLogo} alt="React" />
-        </div>
+        {/*<AppNav serverInfo={serverInfo} clientInfo={clientInfo}/>*/}
+        {/*<div className="grails-logo-container">*/}
+          {/*<img className="grails-logo" src={grailsLogo} alt="Grails" />*/}
+          {/*<span className="plus-logo">+</span>*/}
+          {/*<img className="hero-logo" src={reactLogo} alt="React" />*/}
+        {/*</div>*/}
+
+        <input type="text"/>
+
+        <button onClick={App.submit}>Submit</button>
 
         <Grid>
-          <div id="content">
-            <section className="row colset-2-its">
-              <h1 style={{textAlign: 'center'}}>Welcome to Grails</h1>
-              <br/>
-              <p>
-                Congratulations, you have successfully started your first Grails + React application! While in development mode, changes will be loaded automatically when you edit your React app, without even refreshing the page.
-                Below is a list of controllers that are currently deployed in
-                this application, click on each to execute its default action:
-              </p>
+          {/*<div id="content">*/}
+            {/*<section className="row colset-2-its">*/}
+              {/*<h1 style={{textAlign: 'center'}}>Welcome to Grails</h1>*/}
+              {/*<br/>*/}
+              {/*<p>*/}
+                {/*Congratulations, you have successfully started your first Grails + React application! While in development mode, changes will be loaded automatically when you edit your React app, without even refreshing the page.*/}
+                {/*Below is a list of controllers that are currently deployed in*/}
+                {/*this application, click on each to execute its default action:*/}
+              {/*</p>*/}
 
-              <div id="controllers" role="navigation">
-                <h2>Available Controllers:</h2>
-                <ul>
-                  {serverInfo.controllers ? serverInfo.controllers.map(controller => {
-                    return <li key={controller.name}><a href={SERVER_URL + controller.logicalPropertyName}>{ controller.name }</a></li>;
-                  }) : null }
-                </ul>
-              </div>
-            </section>
+              {/*<div id="controllers" role="navigation">*/}
+                {/*<h2>Available Controllers:</h2>*/}
+                {/*<ul>*/}
+                  {/*{serverInfo.controllers ? serverInfo.controllers.map(controller => {*/}
+                    {/*return <li key={controller.name}><a href={SERVER_URL + controller.logicalPropertyName}>{ controller.name }</a></li>;*/}
+                  {/*}) : null }*/}
+                {/*</ul>*/}
+              {/*</div>*/}
+            {/*</section>*/}
+          {/*</div>*/}
 
-          </div>
         </Grid>
       </div>
     );

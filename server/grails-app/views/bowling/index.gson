@@ -1,0 +1,11 @@
+import grails.core.GrailsApplication
+import grails.plugins.GrailsPluginManager
+
+model {
+    GrailsApplication grailsApplication
+    GrailsPluginManager pluginManager
+}
+
+json {
+    message "hello world!"
+}
