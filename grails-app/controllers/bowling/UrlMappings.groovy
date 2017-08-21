@@ -10,6 +10,7 @@ class UrlMappings {
         }
 
         "/"(view:"/index")
+        "/bowling/"(view: "/bowling/index", controller: BowlingController)
         "500"(view:'/error')
         "404"(view:'/notFound')
     }
