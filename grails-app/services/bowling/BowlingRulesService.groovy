@@ -10,7 +10,7 @@ class BowlingRulesService {
         BowlingGame next = new BowlingGame()
 
         if (game.frames.size() > 0) {
-            def frame = game.frames.last()
+            def lastFrame = game.frames.last()
         }
         next
     }
@@ -21,7 +21,6 @@ class BowlingRulesService {
         if (amountOfPins < 0 || amountOfPins > 10) {
             addError(errors, "Wrong amount of pins")
         }
-
 
         return errors
     }

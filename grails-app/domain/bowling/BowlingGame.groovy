@@ -2,9 +2,13 @@ package bowling
 
 class BowlingGame {
 
-    List<Frame> frames = []
+    List<Frame> frames
     LastFrame lastFrame
-    Integer totalScore = 0
+
+    BowlingGame() {
+        frames = new ArrayList<>(9)
+        lastFrame = new LastFrame()
+    }
 
     static constraints = {
 

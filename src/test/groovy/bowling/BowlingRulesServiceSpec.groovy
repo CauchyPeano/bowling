@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.validation.Errors
 import spock.lang.Specification
 
+import static bowling.Frame.FrameStatus.STRIKE
+
 class BowlingRulesServiceSpec extends Specification implements ServiceUnitTest<BowlingRulesService>{
 
     BowlingRulesService bowlingRulesService
@@ -37,7 +39,9 @@ class BowlingRulesServiceSpec extends Specification implements ServiceUnitTest<B
 
 
         then:"fix me"
-        game.getFrames().last().status() == FrameStatus.STRIKE
+        game.getFrames().size() == 1
+        game.getFrames()[0].getFirst() == 10
+        game.getFrames()[0].status() == STRIKE
 
     }
 }
