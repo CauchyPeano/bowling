@@ -22,7 +22,7 @@ class BowlingGame {
     def score(int frameIndex) {
         validateFrameIndex(frameIndex)
         if (frameIndex == 9) {
-
+           return lastFrame.score()
         } else {
 
             def currentFrame = frames[frameIndex]
@@ -78,7 +78,7 @@ class BowlingGame {
         } else if (nextFrame) {
 
             if (nextFrame.status() == Frame.Status.STRIKE) {
-                return frames[frameIndex + 2].first
+                return getRightScore(frameIndex + 1)
             } else {
                 return nextFrame.second
             }
@@ -86,5 +86,19 @@ class BowlingGame {
         } else {
             return null
         }
+    }
+
+    Integer aggregatedScore(Integer frameIndex) {
+
+        int result = 0
+        for (i in 0..frameIndex) {
+            def s = score(i)
+            if (s) {
+                result += s
+            } else {
+                return null
+            }
+        }
+        result
     }
 }
