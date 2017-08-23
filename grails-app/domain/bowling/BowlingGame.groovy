@@ -28,6 +28,14 @@ class BowlingGame {
             def currentFrame = frames[frameIndex]
             if (currentFrame.status() == Frame.Status.STRIKE) {
 
+                def rightScore = getRightScore(frameIndex)
+                def secondRightScore = getSecondRightScore(frameIndex)
+                if (rightScore && secondRightScore) {
+                    return 10 + rightScore + secondRightScore
+                } else {
+                    null
+                }
+
             } else if (currentFrame.status() == Frame.Status.SPARE) {
 
                 def rightScore = getRightScore(frameIndex)
@@ -57,6 +65,24 @@ class BowlingGame {
             return lastFrame.first
         } else if (frames[frameIndex + 1] && frames[frameIndex + 1].first) {
             return frames[frameIndex + 1].first
+        } else {
+            return null
+        }
+    }
+
+    private Integer getSecondRightScore(Integer frameIndex) {
+        validateFrameIndex(frameIndex)
+        def nextFrame = frames[frameIndex + 1]
+        if (frameIndex == 8) {
+            return lastFrame.second
+        } else if (nextFrame) {
+
+            if (nextFrame.status() == Frame.Status.STRIKE) {
+                return frames[frameIndex + 2].first
+            } else {
+                return nextFrame.second
+            }
+
         } else {
             return null
         }
