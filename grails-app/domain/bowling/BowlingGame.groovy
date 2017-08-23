@@ -21,11 +21,13 @@ class BowlingGame {
 
     def score(int frameIndex) {
         validateFrameIndex(frameIndex)
-        if (frameIndex == 9) {
+        def currentFrame = frames[frameIndex]
+        if (currentFrame == null) {
+            return null
+        } else if (frameIndex == 9) {
            return lastFrame.score()
         } else {
 
-            def currentFrame = frames[frameIndex]
             if (currentFrame.status() == Frame.Status.STRIKE) {
 
                 def rightScore = getRightScore(frameIndex)

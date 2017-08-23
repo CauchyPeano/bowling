@@ -107,6 +107,16 @@ class LastFrameSpec extends Specification implements DomainUnitTest<LastFrame> {
         game.aggregatedScore(9) == null
     }
 
+    void "test unfinished last frame with spare"() {
+        when:
+        def game = bowlingRulesService.parse("X X X X X X X X X 3 7")
+
+        then:
+        game.aggregatedScore(8) == 253
+        game.aggregatedScore(9) == null
+    }
+
+
     void "test simple strike score calculation"() {
         when:
         def game = bowlingRulesService.parse("X 2 6")
