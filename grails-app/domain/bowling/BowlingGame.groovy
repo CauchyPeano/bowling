@@ -16,9 +16,10 @@ class BowlingGame {
 
     @Override
     String toString() {
-        return "BowlingGame{" +
-                "frames=" + frames +
-                ", totalScore=" + totalScore +
-                '}'
+        return "BowlingGame{${frames}}"
+    }
+
+    def score(int frameIndex) {
+
     }
 }

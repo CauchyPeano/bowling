@@ -3,10 +3,10 @@ package bowling
 import grails.testing.gorm.DomainUnitTest
 import spock.lang.Specification
 
-import static bowling.Frame.FrameStatus.OPEN
-import static bowling.Frame.FrameStatus.SPARE
-import static bowling.Frame.FrameStatus.STRIKE
-import static bowling.Frame.FrameStatus.UNFINISHED
+import static bowling.Frame.Status.OPEN
+import static bowling.Frame.Status.SPARE
+import static bowling.Frame.Status.STRIKE
+import static bowling.Frame.Status.UNFINISHED
 
 class FrameSpec extends Specification implements DomainUnitTest<Frame> {
 

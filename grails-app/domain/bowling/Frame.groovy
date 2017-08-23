@@ -2,7 +2,7 @@ package bowling
 
 class Frame {
 
-    enum FrameStatus {
+    enum Status {
         UNFINISHED, OPEN, STRIKE, SPARE
     }
 
@@ -14,17 +14,17 @@ class Frame {
         second range: 0..10
     }
 
-    FrameStatus status() {
+    Status status() {
         if (first == null && second == null) {
-            return FrameStatus.UNFINISHED
+            return Status.UNFINISHED
         } else if (first != null && first < 10 && second == null) {
-            return FrameStatus.UNFINISHED
+            return Status.UNFINISHED
         } else if (first == 10) {
-            return FrameStatus.STRIKE
+            return Status.STRIKE
         } else if (second != null && first + second == 10) {
-            return FrameStatus.SPARE
+            return Status.SPARE
         } else if (second != null && first + second < 10) {
-            return FrameStatus.OPEN
+            return Status.OPEN
         }
         throw new IllegalStateException("Can't infer status of frame ${first}, ${second}")
     }

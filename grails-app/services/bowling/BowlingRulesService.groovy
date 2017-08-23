@@ -6,13 +6,16 @@ import org.springframework.validation.ObjectError
 
 class BowlingRulesService {
 
-    BowlingGame rollBall(BowlingGame game, Integer pins) {
-        BowlingGame next = new BowlingGame()
-
-        if (game.frames.size() > 0) {
-            def lastFrame = game.frames.last()
+    def rollBall(BowlingGame game, Integer pins) {
+        if (game.frames.size() < 9) {
+            if (game.frames.isEmpty() || game.frames.last().status() != Frame.Status.UNFINISHED) {
+                def frame = new Frame()
+                frame.setFirst(pins)
+                game.frames.add(frame)
+            } else if (game.frames.last().status() == Frame.Status.UNFINISHED) {
+                game.frames.last().setSecond(pins)
+            }
         }
-        next
     }
 
     Errors validateRoll(BowlingGame game, Integer amountOfPins) {
@@ -27,5 +30,25 @@ class BowlingRulesService {
 
     private addError(ValidationErrors errors, String message) {
         errors.addError(new ObjectError("BowlingGame", message))
+    }
+
+    BowlingGame parse(String game) {
+
+        def rolls = game.tokenize(" ")
+
+        BowlingGame bowlingGame = new BowlingGame()
+
+        for (String pins : rolls) {
+            int amount
+            if (pins == "X") {
+                amount = 10
+            } else {
+                amount = Integer.valueOf(pins)
+            }
+
+            rollBall(bowlingGame, amount)
+        }
+
+        bowlingGame
     }
 }
