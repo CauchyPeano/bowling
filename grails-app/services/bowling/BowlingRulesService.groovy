@@ -6,7 +6,7 @@ import org.springframework.validation.ObjectError
 
 class BowlingRulesService {
 
-    def rollBall(BowlingGame game, Integer pins) {
+    def void rollBall(BowlingGame game, Integer pins) {
         if (game.frames.size() < 9) {
             if (game.frames.isEmpty() || game.frames.last().status() != Frame.Status.UNFINISHED) {
                 def frame = new Frame()
@@ -14,6 +14,19 @@ class BowlingRulesService {
                 game.frames.add(frame)
             } else if (game.frames.last().status() == Frame.Status.UNFINISHED) {
                 game.frames.last().setSecond(pins)
+            }
+        } else if (game.frames.size() == 9) {
+            if (game.lastFrame == null) {
+                game.lastFrame = new LastFrame()
+            }
+            if (game.lastFrame.first == null) {
+                game.lastFrame.first = pins
+            } else if (game.lastFrame.second == null) {
+                game.lastFrame.second = pins
+            } else if (game.lastFrame.third == null) {
+                game.lastFrame.third = pins
+            } else {
+                throw new IllegalStateException("Game finished")
             }
         }
     }
