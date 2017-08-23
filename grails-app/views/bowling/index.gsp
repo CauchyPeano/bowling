@@ -43,7 +43,7 @@
 <g:layoutBody>
 --}%
 <g:form controller="bowling">
-    <g:field type="number" name="pins_amount"/>
+    <g:field type="string" name="pins_amount"/>
     <g:actionSubmit name="btnSubmit" value="Roll!" action="roll"/>
 </g:form>
 
@@ -62,21 +62,21 @@
     <tr>
         <g:each var="i" in="${(0..8)}">
 
-            <td>1</td>
-            <td class="box">2</td>
+            <td>${game.frames[i]?.first}</td>
+            <td class="box">${game.frames[i]?.second}</td>
 
         </g:each>
 
-        <td>1</td>
-        <td class="box">2</td>
-        <td class="box">2</td>
+        <td>${game.lastFrame.first}</td>
+        <td class="box">${game.lastFrame.second}</td>
+        <td class="box">${game.lastFrame.third}</td>
     </tr>
 
     <tr>
         <g:each var="i" in="${(0..8)}">
-            <td class="score" colspan="2">3</td>
+            <td class="score" colspan="2">${game.aggregatedScore(i)}</td>
         </g:each>
-        <td class="score" colspan="3">3</td>
+        <td class="score" colspan="3">${game.aggregatedScore(9)}</td>
     </tr>
     </tbody>
 </table>
@@ -101,7 +101,7 @@
 %{--</tr>--}%
 %{--</tbody>--}%
 
-%{--${game.toString()}--}%
+${game.toString()}
 
 %{--</g:layoutBody>--}%
 </body>

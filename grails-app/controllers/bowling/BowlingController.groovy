@@ -13,12 +13,12 @@ class BowlingController {
     }
 
     def roll() {
-        def pinAmount = params.pin_amount
+        Integer pinAmount = Integer.valueOf(params.pins_amount)
         def game = session["game"]
 
-        if (bowlingRulesService.validateRoll(game, pinAmount)) {
-
-        }
+//        if (bowlingRulesService.validateRoll(game, pinAmount)) {
+        bowlingRulesService.rollBall(game,  pinAmount)
+//        }
 
 
         params.pins_amount
