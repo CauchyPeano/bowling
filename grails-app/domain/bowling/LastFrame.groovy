@@ -8,9 +8,9 @@ class LastFrame {
 
     Integer score() {
 
-        if (first && second && first + second < 10) {
+        if (first != null && second != null && first + second < 10) {
             return first + second
-        } else if (first && second && third) {
+        } else if (first != null && second != null && third != null) {
             return first + second + third
         } else {
             return null

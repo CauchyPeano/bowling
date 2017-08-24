@@ -115,6 +115,23 @@ class BowlingGameSpec extends Specification implements DomainUnitTest<BowlingGam
         game.aggregatedScore(9) == 300
     }
 
+    void "test failed last frame"() {
+        when:
+        def game = bowlingRulesService.parse("1 9 9 1 X 4 3 1 1 2 2 4 5 6 4 0 0 0 0")
+
+        then:
+        game.aggregatedScore(0) == 19
+        game.aggregatedScore(1) == 39
+        game.aggregatedScore(2) == 56
+        game.aggregatedScore(3) == 63
+        game.aggregatedScore(4) == 65
+        game.aggregatedScore(5) == 69
+        game.aggregatedScore(6) == 78
+        game.aggregatedScore(7) == 88
+        game.aggregatedScore(8) == 88
+        game.aggregatedScore(9) == 88
+    }
+
     void "test unfinished last frame"() {
         when:
         def game = bowlingRulesService.parse("X X X X X X X X X X X")
@@ -170,6 +187,17 @@ class BowlingGameSpec extends Specification implements DomainUnitTest<BowlingGam
         game.score(0) == 12
         game.score(1) == null
     }
+
+    void "test frame missed completely"() {
+        when:
+        def game = bowlingRulesService.parse("0 0 0 0")
+
+        then:
+        game.score(0) == 0
+        game.score(1) == 0
+        game.score(2) == null
+    }
+
 
 
 }

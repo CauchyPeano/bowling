@@ -29,17 +29,59 @@ class BowlingRulesServiceSpec extends Specification implements ServiceUnitTest<B
         errors.hasErrors()
     }
 
-    void "test strike throw"() {
+    void "test validate strike over unfinished frame"() {
         given:
-        def game = new BowlingGame()
+        def game = bowlingRulesService.parse("3 7 8")
 
         when:
-        bowlingRulesService.rollBall(game, 10)
+        def errors = bowlingRulesService.validateRoll(game, 10)
 
-        then:
-        game.getFrames().size() == 1
-        game.getFrames()[0].getFirst() == 10
-        game.getFrames()[0].status() == STRIKE
+        then:"validation should fail"
+        errors.hasErrors()
+    }
+
+    void "test validate success over missed first frame"() {
+        given:
+        def game = bowlingRulesService.parse("3 7 8 2 0")
+
+        when:
+        def errors = bowlingRulesService.validateRoll(game, 10)
+
+        then:"validation should pass"
+        !errors.hasErrors()
+    }
+
+    void "test validate over last frame"() {
+        given:
+        def game = bowlingRulesService.parse("X X X X X X X X X 3")
+
+        when:
+        def errors = bowlingRulesService.validateRoll(game, 9)
+
+        then:"validation should fail"
+        errors.hasErrors()
+    }
+
+    void "test validate finished game 1"() {
+        given:
+        def game = bowlingRulesService.parse("X X X X X X X X X 0 4")
+
+        when:
+        def errors = bowlingRulesService.validateRoll(game, 9)
+
+        then:"validation should fail"
+        errors.hasErrors()
+    }
+
+    void "test validate finished game 2"() {
+        given:
+        def game = bowlingRulesService.parse("X X X X X X X X X 6 4 1")
+
+        when:
+        def errors = bowlingRulesService.validateRoll(game, 9)
+
+        then:"validation should fail"
+        errors.hasErrors()
     }
 
     void "test 4 strikes"() {
@@ -62,5 +104,17 @@ class BowlingRulesServiceSpec extends Specification implements ServiceUnitTest<B
         game.getLastFrame().third == 10
     }
 
+    void "test strike throw"() {
+        given:
+        def game = new BowlingGame()
+
+        when:
+        bowlingRulesService.rollBall(game, 10)
+
+        then:
+        game.getFrames().size() == 1
+        game.getFrames()[0].getFirst() == 10
+        game.getFrames()[0].status() == STRIKE
+    }
 
 }

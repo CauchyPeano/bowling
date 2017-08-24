@@ -94,7 +94,7 @@ class BowlingGame {
         int result = 0
         for (i in 0..frameIndex) {
             def s = score(i)
-            if (s) {
+            if (s != null) {
                 result += s
             } else {
                 return null

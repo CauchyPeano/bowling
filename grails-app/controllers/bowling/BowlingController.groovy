@@ -1,6 +1,9 @@
 package bowling
 
+import grails.validation.ValidationErrors
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.validation.Errors
+import org.springframework.validation.ObjectError
 
 class BowlingController {
 
@@ -13,15 +16,25 @@ class BowlingController {
     }
 
     def roll() {
-        Integer pinAmount = Integer.valueOf(params.pins_amount)
         def game = session["game"]
+        if (!params.pins_amount) {
+            def errors = new ValidationErrors(game)
+            errors.addError(new ObjectError("BowlingGame", "Please enter amount of pins you want to hit"))
+            game.setErrors(errors)
 
-//        if (bowlingRulesService.validateRoll(game, pinAmount)) {
-        bowlingRulesService.rollBall(game,  pinAmount)
-//        }
+        } else {
+            Integer pinAmount = Integer.valueOf(params.pins_amount)
 
+            game.setErrors(null)
 
-        params.pins_amount
+            def validation = bowlingRulesService.validateRoll(game, pinAmount)
+            if (!validation.hasErrors()) {
+                bowlingRulesService.rollBall(game, pinAmount)
+            } else {
+                game.setErrors(validation)
+            }
+        }
+
         render(view: "index", model: [test: "wooot", game: game])
     }
 }

@@ -1,3 +1,4 @@
+<%@ page import="bowling.Frame" %>
 <!doctype html>
 <html lang="en" class="no-js">
 <head>
@@ -47,7 +48,7 @@
     <g:actionSubmit name="btnSubmit" value="Roll!" action="roll"/>
 </g:form>
 
-%{--<g:renderErrors bean="${game}"/>--}%
+<g:renderErrors bean="${game}"/>
 
 <br/>
 
@@ -62,8 +63,26 @@
     <tr>
         <g:each var="i" in="${(0..8)}">
 
-            <td>${game.frames[i]?.first}</td>
-            <td class="box">${game.frames[i]?.second}</td>
+            <g:if test="${game.frames[i]?.status() == bowling.Frame.Status.STRIKE}">
+                <td></td>
+                <td class="box">X</td>
+            </g:if>
+            <g:if test="${game.frames[i]?.status() == bowling.Frame.Status.SPARE}">
+                <td>${game.frames[i]?.first}</td>
+                <td class="box">/</td>
+            </g:if>
+            <g:if test="${game.frames[i]?.status() == bowling.Frame.Status.OPEN}">
+                <td>${game.frames[i]?.first}</td>
+                <td class="box">${game.frames[i]?.second}</td>
+            </g:if>
+            <g:if test="${game.frames[i]?.status() == bowling.Frame.Status.UNFINISHED}">
+                <td>${game.frames[i]?.first}</td>
+                <td class="box">${game.frames[i]?.second}</td>
+            </g:if>
+            <g:if test="${game.frames[i] == null}">
+                <td></td>
+                <td class="box"></td>
+            </g:if>
 
         </g:each>
 
@@ -81,28 +100,5 @@
     </tbody>
 </table>
 
-
-%{--<tbody style="border: 1px solid black">--}%
-%{--<tr>--}%
-    %{--<g:each var="i" in="${(0..9)}">--}%
-
-        %{--<td></td>--}%
-        %{--<td></td>--}%
-
-    %{--</g:each>--}%
-%{--</tr>--}%
-%{--<tr>--}%
-    %{--<g:each var="i" in="${(0..9)}">--}%
-
-        %{--<td></td>--}%
-        %{--<td></td>--}%
-
-    %{--</g:each>--}%
-%{--</tr>--}%
-%{--</tbody>--}%
-
-${game.toString()}
-
-%{--</g:layoutBody>--}%
 </body>
 </html>
